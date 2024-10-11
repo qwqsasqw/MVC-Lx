@@ -1,0 +1,38 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+  <!--配置监听器，作用：在web项目启动时，负责读取默认的spring配置文件
+
+    在非web 项目中，我们必需new  ClasspathApplicationContext 实例化spring容器，再通过getBean方法获得 纳入spring容器管理的类对象
+
+    //在web项目中，是用户发请求给服务端  ，Spring容器的创建是交给以下的ContextLoaderListener监听器完成的
+    //此监听器内部会创建Spring容器，并读取默认的spring配置文件  WEB-INF目录下的dispatcher-servlet.xml
+    //实例化spring容器的类
+    ClasspathAppacliatonContxt
+
+
+  -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+
+  <servlet>
+    <servlet-name>dispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!--Servlet的映射  表示.action后缀的请求才会执行  DispatcherServlet中的service方法-->
+  <servlet-mapping>
+    <servlet-name>dispatcher</servlet-name>
+
+    <url-pattern>/</url-pattern>
+    <!--/表示DispatcherServlet处理所有的前端请求
+    <url-pattern>*.do</url-pattern> 表示url中后缀为.do的请求才会经过DispatcherServlet进行处理-->
+  </servlet-mapping>
+
+</web-app>
