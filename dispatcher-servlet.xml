@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+
+        http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+
+        http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+
+">
+
+
+    <!--dispatcher-servlet.xml   是springMVC的默认配置文件-->
+    <context:component-scan base-package="com.controller"></context:component-scan>
+
+    <!--在访问webapp目录下的index.html文件时出现了404错误,
+    原因是在web.xml配置文件中我们将DispatcherServlet映射地址改为了/ 即访问任意资源(.html,.js,.css或控制器)
+    都会经过DispatcherServlet进行处理，但静态资源我们不需要交给DispatcherServlet进行处理，因此在配置文件中还需要增加一些配置
+
+    http://localhost:8081/execute  可以调用execute方法
+    http://localhost:8081/index.html    可以正常访问index.html 页面
+    -->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    <!---->
+    <mvc:annotation-driven ></mvc:annotation-driven>
+
+    <!--表示将 resources 和static目录下的文件当做静态资源(.html,.js,.css,图片，视频)  ，即不要交给 DispatcherServlet进行处理
+   <mvc:resources mapping="/resources/**" location="/static/"/>-->
+
+
+    <bean id="internalResourceViewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+</beans>
